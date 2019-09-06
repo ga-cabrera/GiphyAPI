@@ -4,32 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Giphy Galore</title>
+    <title>Giphy G-Thousand</title>
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- CSS Style -->
     <link rel="stylesheet" href="assets/css/style.css"> <!-- YOUR CSS LINK FILE-->
 </head>
 <body>
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto">
+    <div class="cover-container d-flex w-50 h-100 p-3 mx-auto flex-column">
+      <header class="masthead">
         <div class="inner">
           <h3 class="masthead-brand">Giphy G-Thousand</h3>
           <form class="form-inline">
             <div id="searchBar">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+              <input class="form-control mr-sm-2" id="gif-input" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-light my-2 my-sm-0" id="gif-button" type="submit">GIPHY IT</button>
             </div>
           </form>
         </div>
       </header>
       <div class="row">
-        <div class="col" id="buttons">
+        <div class="col" id="button-container">
           <!-- generated buttons go here via logic.js -->
         </div>
       </div>
       <div class="row">
-        <div class="col" id="gif-display">
+        <div class="col" id="gif-container">
           <!-- gif's go here -->
         </div>
       </div>

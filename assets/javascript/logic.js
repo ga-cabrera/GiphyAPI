@@ -1,113 +1,29 @@
 $(document).ready(function() {
-    // GLOBAL VARIABLES
-    var button;
+// Initial array of buttons
+var gifButtons = ["hello", "goodbye", "farewell"]
 
-    // Array of Topics
-    var topics = ["the office", "shiba", "tzuyu", "pokemon", "jennie", "danmachi", "yugioh", "gordan ramsay"];
-    
-    // Function to add buttons of topics to the page
-    var displayButton = (arrayToUse, classToAdd, areaToAdd) => {
-        // empties the area so that there are no duplicate buttons
-        $(areaToAdd).empty();
-        // loops through array and adds a button with the name of the topic
-        for ( var i = 0; i < arrayToUse.length; i++ ) {
-            button = $("<button>");
-            button.addClass(classToAdd);
-            button.attr("data-type", arrayToUse[i]);
-            button.text(`#${arrayToUse[i]}`);
-            $(areaToAdd).append(button);
-        }
-    }
+// creating a random number and adding it to the end of my URL via offset. Offset number specifies the starting position of the giphy results. Defaults to 0.
+var offsetNumber = Math.floor(Math.random() * 15) + (Math.floor(Math.random() *20));
+var offset = `&offset=${offsetNumber}`;
 
-    // .gif-button on click
-    $(document).on("click", ".gif-button", function() {
-        $(".gif-button").removeClass("active");
-        $(this).addClass("active");
-
-        //generates a random number between 1 and 25
-        var randomNumber = Math.floor(Math.random() * 25) + (Math.floor(Math.random() * 10));
-        // the offset will be a random number between 1-25 + 1-10
-        var offset = `&offset=${randomNumber}`;
-
-        var type = $(this).attr("data-type");
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + type + "&api_key=ah4zNuFUTA4wcUfYLEGQtw5clQ5ArL8s&limit=10" + offset;
-
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function(response) {
-            var results = response.data;
-            // loops through ther response
-            for (var i = 0; i < results.length; i++) {
-                // for each response
-                // create a div with .gif-item
-                var gifItem = $("<div class=\"gif-item\">");
-                var rating = results[i].rating;
-                var title = results[i].title;
-                var t = $("<p>").text(`Title: ${title}`);
-                var r = $("<p>").text(`Rating: ${rating}`);
-                var animated = results[i].images.fixed_height.url;
-                var still = results[i].images.fixed_height_still.url;
-
-                // creates the gif with the "still" and "animate" data attr
-                var image = $("<img>");
-                image.attr("src", still)
-                image.attr("data-still", still);
-                image.attr("data-animate", animated);
-                image.attr("data-state", "still");
-                image.addClass("gif");
-
-                // Appends gif to the gif container
-                gifItem.append(image);
-                gifItem.append(t);
-                gifItem.append(r);
-                $("#gif-container").prepend(gifItem);
-            }
-        })
+function displayGifInfo() {
+    var gif = $(this).attr("data-name");
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif + "&api_key=lEx6ZgPLV9L7TcvzndJKaxwOljBoyPXj=10" + offset;
+    // creating an AJAX call for giphy buttons
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response){
+        // creating variables that will help add gif to html
+        var gifDiv = $("<div class='gif'>");
+        var rating = response.rating;
+        var title = response.title;
+        // var's that will display rating and title of gif
+        var displayRating = $("<p>").text(`Rating: ${rating}`);
+        gifDiv.append(displayRating);
+        var displayTitle = $("<p>").text(`Title: ${title}`);
+        gifDiv.append(displayTitle);
     })
 
-    // .gif on click 
-    $(document).on("click", ".gif", function() {
-        var state = $(this).attr("data-state");
-        // if
-        state === "still" ? (
-            $(this).attr("src", $(this).attr("data-animate")),
-            $(this).attr("data-state", "animate")
-        ): ( 
-        // else
-            $(this).attr("src", $(this).attr("data-still")),
-            $(this).attr("data-state", "still")
-        );
-    })
-
-    // creating new buttons 
-    $("#add-gif").on("click", function(e) {
-        e.preventDefault();
-        var newTopic = $("input").val().trim();
-        // returns false if search bar is empty
-        if (newTopic === "") {
-            alert("Please enter a gif topic");
-            return false;
-        }
-        topics.push(newTopic);
-        displayButton(topics, "gif-button", "#button-container");
-    })
-
-    // scroll to top function that hides the scroll button 
-    $(window).scroll(function() {
-        if ($(this).scrollTop() > 200 ) {
-            $("#scroll-to-top").show();
-        } else {
-            $("#scroll-to-top").hide();
-        }
-    })
-
-    // when button is pressed, will scroll to top of document
-    $("#scroll-to-top").on("click", function(e) {
-        e.preventDefault();
-        $("html, body").animate({scrollTop:0}, "200");
-      });
-
-    // Running displayButton();
-    displayButton(topics, "gif-button", "#button-container");
+}
 })
