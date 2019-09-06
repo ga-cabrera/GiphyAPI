@@ -59,6 +59,11 @@ body {
 
 .masthead-brand {
   margin-bottom: 0;
+  float: left;
+}
+
+.form-inline {
+  float: right;
 }
 
 .nav-masthead .nav-link {
