@@ -23,6 +23,14 @@ function displayGifInfo() {
         gifDiv.append(displayRating);
         var displayTitle = $("<p>").text(`Title: ${title}`);
         gifDiv.append(displayTitle);
+        var animated = $("<img>").attr("src",images.fixed_height.url);
+        gifDiv.append(animated);
+        var still = $("<img>").attr("src",images.fixed_height_still.url);
+        gifDiv.append(still);
+        // adding gifs above previous gifs
+        console.log(gifDiv)
+        $("#gif-container").prepend(gifDiv);
+
     })
 
 }
